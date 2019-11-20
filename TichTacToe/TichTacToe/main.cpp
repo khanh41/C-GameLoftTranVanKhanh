@@ -2,10 +2,10 @@
 #include <time.h>
 using namespace std;
 
-#define size 10 // do dai va rong cua ban co
+#define size 3 // do dai va rong cua ban co
 #define tickX 1
 #define tickO 0
-#define lengthWin 4 // do dai chien thang
+#define lengthWin 3 // do dai chien thang
 #define fill size*size-1 // het o trong de danh
 int init(int& select, string& playerO, string& playerX, int board[size][size]);
 bool check(int board[size][size], int tick, int row, int col);
@@ -80,7 +80,7 @@ bool check(int board[size][size], int tick, int row, int col) {
 		if (board[i][col] == tick) dem++;
 		else dem = 0;
 		if (dem == lengthWin) {
-			if (board[i + 1][col] == 1 - tick || board[i - lengthWin][col] == 1 - tick)
+			if (board[i + 1][col] != 1 - tick || board[i - lengthWin][col] != 1 - tick)
 				return true;
 		}
 	}
@@ -92,7 +92,7 @@ bool check(int board[size][size], int tick, int row, int col) {
 		if (board[row][j] == tick) dem++;
 		else dem = 0;
 		if (dem == lengthWin) {
-			if (board[row][j + 1] == 1 - tick || board[row][j - lengthWin] == 1 - tick)
+			if (board[row][j + 1] != 1 - tick || board[row][j - lengthWin] != 1 - tick)
 				return true;
 		}
 	}
