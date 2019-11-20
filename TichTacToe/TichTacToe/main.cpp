@@ -19,7 +19,7 @@ int main() {
 	string playerO, playerX;
 
 	//loi gioi thieu, nhap cac tham so
-	init(select, playerO, playerX, board);
+	if (init(select, playerO, playerX, board) == 0) return 0;
 
 	//play
 	for (int i = 0; i < size * size; i++) {
