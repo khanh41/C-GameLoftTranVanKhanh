@@ -58,13 +58,30 @@ void savefile(list<students> listStudent) {
 	}
 	else cout << "Unable to open file";
 }
-void loadfile(list<students> listStudent) {
+void loadfile(list<students>& listStudent) {
 	string line;
 	ifstream myfile("DSSV.txt");
+	students student;
 	if (myfile.is_open())
 	{
 		while (getline(myfile, line)) {
 			cout << line << '\n';
+			for (int i = 0, dem = 0; i < line.length(); i++) {
+				if (line[i] != '\t') {
+					string temp;
+					while (line[i] != '\t' && i < line.length())
+					{
+						temp += line[i];
+						i++;
+					}
+					if (dem == 0) student.id = stoi(temp, 0, 10);
+					if (dem == 1) student.name = temp;
+					if (dem == 2) student.score = stoi(temp, 0, 10);
+					dem++;
+					i--;
+				}
+			}
+			listStudent.push_back(student);
 		}
 		myfile.close();
 	}
