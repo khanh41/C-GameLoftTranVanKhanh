@@ -11,14 +11,22 @@ struct students {
 bool input(list<students>& listStudent) {
 
 	students student;
-	cout << "Nhap id (0 neu khong nhap): ";
-	cin >> student.id;
-	if (student.id == 0) return false;
 	list<students>::iterator it;
-	for (it = listStudent.begin(); it != listStudent.end(); it++)
-	{
-		if (student.id == (*it).id) continue;
-	}
+	bool checkExis = 0;
+	cout << "Nhap id (0 neu khong nhap): ";
+	do {
+		checkExis = 0;
+		cin >> student.id;
+		if (student.id == 0) return false;
+		for (it = listStudent.begin(); it != listStudent.end(); it++)
+		{
+			if (student.id == (*it).id) {
+				checkExis = 1;
+				cout << "Nhap lai id: ";
+				break;
+			}
+		}
+	} while (checkExis);
 	cout << "Nhap name: ";
 	cin >> student.name;
 	cout << "Nhap score: ";
@@ -30,8 +38,38 @@ bool input(list<students>& listStudent) {
 	listStudent.push_back(student);
 	return true;
 }
-
-void main()
+void output(list<students> listStudent)
+{
+	list<students>::iterator it;
+	for (it = listStudent.begin(); it != listStudent.end(); it++)
+	{
+		cout << "\t" << (*it).id << "\t\t" << (*it).name << "\t\t" << (*it).score << endl;
+	}
+	cout << '\n';
+}
+void savefile(list<students> listStudent) {
+	ofstream myfile("DSSV.txt");
+	if (myfile.is_open())
+	{
+		list<students>::iterator it;
+		for (it = listStudent.begin(); it != listStudent.end(); it++)
+			myfile << "\t" << (*it).id << "\t\t" << (*it).name << "\t\t" << (*it).score << endl;
+		myfile.close();
+	}
+	else cout << "Unable to open file";
+}
+void loadfile(list<students> listStudent) {
+	string line;
+	ifstream myfile("DSSV.txt");
+	if (myfile.is_open())
+	{
+		while (getline(myfile, line)) {
+			cout << line << '\n';
+		}
+		myfile.close();
+	}
+	else cout << "Unable to open file";
+}void main()
 {
 	list<students> listSt;
 	int choose;
@@ -49,14 +87,15 @@ void main()
 		case 1: while (input(listSt)); break;
 		case 2:
 			cout << "\t" << "ID" << "\t\t" << "NAME" << "\t\t" << "SCORE" << endl;
-	//		output(listSt);
+			output(listSt);
 			break;
 		case 3:
-	//		savefile(listSt);
+			savefile(listSt);
 			break;
 		case 4:
-	//		loadfile(listSt);
+			loadfile(listSt);
 		}
 		cout << endl;
 	} while (choose != 0);
+
 }
