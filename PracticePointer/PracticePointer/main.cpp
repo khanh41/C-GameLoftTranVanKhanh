@@ -8,6 +8,29 @@ struct students {
 	string name;
 	float score;
 };
+bool input(list<students>& listStudent) {
+
+	students student;
+	cout << "Nhap id (0 neu khong nhap): ";
+	cin >> student.id;
+	if (student.id == 0) return false;
+	list<students>::iterator it;
+	for (it = listStudent.begin(); it != listStudent.end(); it++)
+	{
+		if (student.id == (*it).id) continue;
+	}
+	cout << "Nhap name: ";
+	cin >> student.name;
+	cout << "Nhap score: ";
+	do {
+		cin >> student.score;
+		if (student.score <= 10 && student.score >= 0) break;
+		cout << "nhap lai score (0 den 10)";
+	} while (1 == 1);
+	listStudent.push_back(student);
+	return true;
+}
+
 void main()
 {
 	list<students> listSt;
@@ -26,15 +49,14 @@ void main()
 		case 1: while (input(listSt)); break;
 		case 2:
 			cout << "\t" << "ID" << "\t\t" << "NAME" << "\t\t" << "SCORE" << endl;
-			output(listSt);
+	//		output(listSt);
 			break;
 		case 3:
-			savefile(listSt);
+	//		savefile(listSt);
 			break;
 		case 4:
-			loadfile(listSt);
+	//		loadfile(listSt);
 		}
 		cout << endl;
 	} while (choose != 0);
-	reuturn 0;
 }
