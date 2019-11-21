@@ -1,2 +1,2 @@
-	12		eqw		2
-	32		wqe		2
+	1		khanh		10
+	2		pluto		9

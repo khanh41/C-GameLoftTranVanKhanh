@@ -8,60 +8,61 @@ struct students {
 	string name;
 	float score;
 };
-bool input(list<students>& listStudent) {
+bool InPut(list<students*> &listStudent) {
 
-	students student;
-	list<students>::iterator it;
+	students* student = new students;
+	list<students*>::iterator it;
 	bool checkExis = 0;
-	cout << "Nhap id (0 neu khong nhap): ";
+	cout << "Input ID (0 to stop): ";
 	do {
 		checkExis = 0;
-		cin >> student.id;
-		if (student.id == 0) return false;
+		cin >> student->id;
+		if (student->id == 0) return false;
 		for (it = listStudent.begin(); it != listStudent.end(); it++)
 		{
-			if (student.id == (*it).id) {
+			if (student->id == (*it)->id) {
 				checkExis = 1;
-				cout << "Nhap lai id: ";
+				cout << "Input ID again: ";
 				break;
 			}
 		}
 	} while (checkExis);
-	cout << "Nhap name: ";
-	cin >> student.name;
-	cout << "Nhap score: ";
+	cout << "Input Name: ";
+	cin >> student->name;
+	cout << "Input Score: ";
 	do {
-		cin >> student.score;
-		if (student.score <= 10 && student.score >= 0) break;
-		cout << "nhap lai score (0 den 10)";
+		cin >> student->score;
+		if (student->score <= 10 && student->score >= 0) break;
+		cout << "Input Score again (0 to 10)";
 	} while (1 == 1);
 	listStudent.push_back(student);
+//	delete student;
 	return true;
 }
-void output(list<students> listStudent)
+void OutPut(list<students*> listStudent)
 {
-	list<students>::iterator it;
+	list<students*>::iterator it;
 	for (it = listStudent.begin(); it != listStudent.end(); it++)
 	{
-		cout << "\t" << (*it).id << "\t\t" << (*it).name << "\t\t" << (*it).score << endl;
+		cout << "\t" << (*it)->id << "\t\t" << (*it)->name << "\t\t" << (*it)->score << endl;
 	}
 	cout << '\n';
 }
-void savefile(list<students> listStudent) {
+void SaveFile(list<students*> listStudent) {
 	ofstream myfile("DSSV.txt");
 	if (myfile.is_open())
 	{
-		list<students>::iterator it;
+		list<students*>::iterator it;
 		for (it = listStudent.begin(); it != listStudent.end(); it++)
-			myfile << "\t" << (*it).id << "\t\t" << (*it).name << "\t\t" << (*it).score << endl;
+			myfile << "\t" << (*it)->id << "\t\t" << (*it)->name << "\t\t" << (*it)->score << endl;
 		myfile.close();
 	}
 	else cout << "Unable to open file";
 }
-void loadfile(list<students>& listStudent) {
+void LoadFile(list<students*> &listStudent) {
 	string line;
 	ifstream myfile("DSSV.txt");
-	students student;
+	students* student = new students;
 	if (myfile.is_open())
 	{
 		while (getline(myfile, line)) {
@@ -74,21 +75,22 @@ void loadfile(list<students>& listStudent) {
 						temp += line[i];
 						i++;
 					}
-					if (dem == 0) student.id = stoi(temp, 0, 10);
-					if (dem == 1) student.name = temp;
-					if (dem == 2) student.score = stoi(temp, 0, 10);
+					if (dem == 0) student->id = stoi(temp, 0, 10);
+					if (dem == 1) student->name = temp;
+					if (dem == 2) student->score = stoi(temp, 0, 10);
 					dem++;
 					i--;
 				}
 			}
 			listStudent.push_back(student);
 		}
+		delete student;
 		myfile.close();
 	}
 	else cout << "Unable to open file";
 }void main()
 {
-	list<students> listSt;
+	list<students*> listSt;
 	int choose;
 	do {
 		cout << "-----------MENU----------" << endl;
@@ -101,16 +103,16 @@ void loadfile(list<students>& listStudent) {
 		cin >> choose;
 		switch (choose)
 		{
-		case 1: while (input(listSt)); break;
+		case 1: while (InPut(listSt)); break;
 		case 2:
 			cout << "\t" << "ID" << "\t\t" << "NAME" << "\t\t" << "SCORE" << endl;
-			output(listSt);
+			OutPut(listSt);
 			break;
 		case 3:
-			savefile(listSt);
+			SaveFile(listSt);
 			break;
 		case 4:
-			loadfile(listSt);
+			LoadFile(listSt);
 		}
 		cout << endl;
 	} while (choose != 0);

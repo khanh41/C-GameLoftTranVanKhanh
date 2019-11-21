@@ -1,3 +1,6 @@
 ﻿  main.cpp
-D:\PracticeGameLoft\C-GameLoftTranVanKhanh\PracticePointer\PracticePointer\main.cpp(73,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
+D:\PracticeGameLoft\C-GameLoftTranVanKhanh\PracticePointer\PracticePointer\main.cpp(70,31): warning C4018: '<': signed/unsigned mismatch
+D:\PracticeGameLoft\C-GameLoftTranVanKhanh\PracticePointer\PracticePointer\main.cpp(73,34): warning C4018: '<': signed/unsigned mismatch
+D:\PracticeGameLoft\C-GameLoftTranVanKhanh\PracticePointer\PracticePointer\main.cpp(80,41): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+D:\PracticeGameLoft\C-GameLoftTranVanKhanh\PracticePointer\PracticePointer\main.cpp(92,1): warning C4326: return type of 'main' should be 'int' instead of 'void'
   PracticePointer.vcxproj -> D:\PracticeGameLoft\C-GameLoftTranVanKhanh\PracticePointer\Debug\PracticePointer.exe
