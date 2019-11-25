@@ -24,6 +24,7 @@ void Patient::InitResistance()
 {
 	int min = 1000, max = 9000;
 	this->m_resistance = rand() % (max - min + 1) + min;
+	cout << endl << "Health: " << this->m_resistance << endl;
 }
 
 void Patient::DoStart()
@@ -43,21 +44,23 @@ void Patient::DoStart()
 void Patient::TakeMedicine()
 {
 	list <Virus*> ::iterator it;
-
+	int size = this->m_virusList.size();
+	cout << endl << "Amount of Virus: " << size << endl;
 	for (it = this->m_virusList.begin(); it != this->m_virusList.end(); ++it)
-	{
+	{ 
+		cout << (*it)->getResistance();
 		if ((*it)->ReduceResistance(rand() % 60 + 1) == false) {
-			this->m_virusList.push_back((*it)->DoClone());
+			this->m_virusList.push_back((*it)->DoClone(this->m_virusList));
 		}
 		else (*it)->DoDie();
 		if (m_resistance < TotalVirusResistance(this->m_virusList)) DoDie();
+		cout << "  ";
 	}
+	cout << endl << "Amount of Virus Clone: " << this->m_virusList.size() - size << endl;
 }
 
 void Patient::DoDie()
 {
-//	delete this;
-	this->m_virusList.clear();
 	this->m_state = 0;
 }
 
