@@ -4,6 +4,8 @@
 #include<fstream>
 #include<time.h>
 using namespace std;
+#define BLUE 111
+#define RED 222
 class Virus
 {
 protected:
@@ -20,12 +22,14 @@ public:
 	virtual Virus* DoClone() = 0;
 	virtual void DoDie() = 0;
 	virtual void InitResistance() = 0;
+	int getResistance();
 };
 
 class FluVirus:public Virus {
 private:
 	int m_color;//blue (value 0x0000ff) or red (value 0xff0000)
 public:
+	FluVirus();
 	void DoBorn();
 	FluVirus *DoClone();
 	void DoDie();
@@ -36,7 +40,7 @@ public:
 
 class DengueVirus :public Virus {
 private:
-	char m_protein[4];
+	char* m_protein;
 public:
 	DengueVirus();
 	DengueVirus(char*,int,char[]);

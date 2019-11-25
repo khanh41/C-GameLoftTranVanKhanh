@@ -41,20 +41,29 @@ void Virus::LoadADNInformation()
 
 bool Virus::ReduceResistance(int medicine_resistance)
 {
-	m_resistance -= medicine_resistance;
-	if (this->m_resistance <= 0) //if virus die
+	cout << m_resistance << " ";
+	if (this->m_resistance <= medicine_resistance) //if virus die
 	{
-		cout << "Die ";
 		return true;
 	}
 	return false;
 }
 
+int Virus::getResistance()
+{
+	return this->m_resistance;
+}
+
+FluVirus::FluVirus()
+{
+	DoBorn();
+	InitResistance();
+}
+
 void FluVirus::DoBorn()
 {
 	LoadADNInformation();
-	srand(time(NULL));
-	this->m_color = rand() % 2 ? 0x0000ff : 0xff0000;
+	this->m_color = rand() % 2 ? BLUE : RED;
 }
 
 FluVirus* FluVirus::DoClone()
@@ -75,8 +84,16 @@ void FluVirus::DoDie()
 
 void FluVirus::InitResistance()
 {
-	srand(time(NULL));
-	this->m_resistance = rand() % 11 + 10;
+	int min, max;
+	if (this->m_color == BLUE) {
+		min = 10;
+		max = 15;
+	}
+	else{
+		min = 10;
+		max = 20;
+	}
+	this->m_resistance = rand() % (max - min + 1) + min;;
 }
 
 void FluVirus::SetColor(int m_color)
@@ -91,9 +108,8 @@ int FluVirus::GetColor()
 
 DengueVirus::DengueVirus()
 {
-	this->m_dna = '\0';
-	this->m_protein[0] = '\0';
-	this->m_resistance = 10;
+	DoBorn();
+	InitResistance();
 }
 
 DengueVirus::DengueVirus(char* m_dna, int m_resistance, char m_protein[])
@@ -106,7 +122,6 @@ DengueVirus::DengueVirus(char* m_dna, int m_resistance, char m_protein[])
 void DengueVirus::DoBorn()
 {
 	LoadADNInformation();
-	srand(time(NULL));
 	int random = rand() % 3;
 	if (random == 0) SetProtein("NS3");
 	if (random == 1) SetProtein("NS5");
@@ -131,7 +146,6 @@ void DengueVirus::DoDie()
 
 void DengueVirus::InitResistance()
 {
-	srand(time(NULL));
 	if(this->m_protein=="NS3") this->m_resistance = rand() % 10 + 1;
 	if(this->m_protein=="NS5") this->m_resistance = rand() % 10 + 11;
 	if(this->m_protein=="E")   this->m_resistance = rand() % 10 + 21;
@@ -139,8 +153,9 @@ void DengueVirus::InitResistance()
 
 void DengueVirus::SetProtein(const char m_protein[])
 {
+	this->m_protein = new char[100]{""};
 	int i = 0;
-	while(m_protein != '\0'){
+	while(m_protein[i] != '\0'){
 		this->m_protein[i] = m_protein[i];
 		i++;
 	}

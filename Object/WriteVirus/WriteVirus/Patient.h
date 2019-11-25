@@ -4,6 +4,7 @@
 #include <list>
 #include<time.h>
 using namespace std;
+
 class Patient
 {
 private:
@@ -14,6 +15,12 @@ public:
 	Patient();
 	Patient(int, list<Virus*>, int);
 	~Patient();
+	void InitResistance();
 	void DoStart();
+	void TakeMedicine();
+	void DoDie();
+	int getState();
+	int TotalVirusResistance(list<Virus*>);
 };
+
 
