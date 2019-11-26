@@ -16,7 +16,7 @@ protected:
 public:
 	Virus();
 	Virus(char*, int);
-	~Virus();
+	virtual ~Virus();
 	Virus(const Virus&);
 	void LoadADNInformation(); // load m_dna from file 
 	bool ReduceResistance(int); // when call TakeMedicine: m_resistance -= medicine_resistance, <=0 destroyed virus
@@ -50,6 +50,7 @@ private:
 public:
 	DengueVirus();
 	DengueVirus(const DengueVirus&);
+	~DengueVirus();
 	void DoBorn();
 	DengueVirus* DoClone(list<Virus*>&);
 	void DoDie();

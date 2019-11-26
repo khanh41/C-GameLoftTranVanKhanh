@@ -15,7 +15,7 @@ Virus::Virus(char* m_dna, int m_resistance)
 
 Virus::~Virus()
 {
-		delete[] this->m_dna;
+	delete[] this->m_dna;
 }
 
 Virus::Virus(const Virus& virus)
@@ -42,7 +42,7 @@ void Virus::LoadADNInformation()
 bool Virus::ReduceResistance(int medicine_resistance)
 {
 	this->m_resistance -= medicine_resistance;
-	if (this->m_resistance<=0) //if virus die
+	if (this->m_resistance <= 0) //if virus die
 	{
 		return true;
 	}
@@ -144,13 +144,19 @@ DengueVirus::DengueVirus(const DengueVirus& deng) : Virus(deng)
 	this->SetProtein(deng.m_protein);
 }
 
+DengueVirus::~DengueVirus()
+{
+	delete[] this->m_protein;
+}
+
 void DengueVirus::DoBorn()
 {
 	LoadADNInformation();
 	int random = rand() % 3;
-	if (random == 0) SetProtein("NS3");
-	if (random == 1) SetProtein("NS5");
-	if (random == 2) SetProtein("E");
+	//if (random == 0) SetProtein("NS3");
+	//if (random == 1) SetProtein("NS5");
+	//if (random == 2) 
+	SetProtein("E");
 }
 
 DengueVirus* DengueVirus::DoClone(list<Virus*>& list)
@@ -167,7 +173,6 @@ DengueVirus* DengueVirus::DoClone(list<Virus*>& list)
 
 void DengueVirus::DoDie()
 {
-	delete[] this->m_protein;
 	m_resistance = NULL;
 }
 

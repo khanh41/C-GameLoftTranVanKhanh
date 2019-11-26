@@ -16,9 +16,11 @@ Patient::Patient(int m_resistance, list<Virus*> m_virusList, int m_state)
 Patient::~Patient()
 {
 	list <Virus*> ::iterator it;
-	for (it = this->m_virusList.begin(); it != this->m_virusList.end(); ++it)
+	for (it = this->m_virusList.begin(); it != this->m_virusList.end();)
 	{
 		delete *it;
+		this->m_virusList.remove(*it);
+		it = this->m_virusList.begin();
 	}
 	m_virusList.clear();
 }
