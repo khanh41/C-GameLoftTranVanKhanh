@@ -21,10 +21,13 @@ public:
 	void LoadADNInformation(); // load m_dna from file 
 	bool ReduceResistance(int); // when call TakeMedicine: m_resistance -= medicine_resistance, <=0 destroyed virus
 	virtual void DoBorn() = 0;
-	virtual Virus* DoClone(list<Virus*>) = 0;
+	virtual Virus* DoClone(list<Virus*>&) = 0;
 	virtual void DoDie() = 0;
 	virtual void InitResistance() = 0;
 	int getResistance();
+	void setResistance(int);
+	void SetDna(const char[]);
+	char* GetDna();
 };
 
 class FluVirus:public Virus {
@@ -34,7 +37,7 @@ public:
 	FluVirus();
 	FluVirus(const FluVirus&);
 	void DoBorn();
-	FluVirus *DoClone(list<Virus*>);
+	FluVirus *DoClone(list<Virus*>&);
 	void DoDie();
 	void InitResistance();
 	void SetColor(int);
@@ -49,7 +52,7 @@ public:
 	DengueVirus(const DengueVirus&);
 	DengueVirus(char*,int,char[]);
 	void DoBorn();
-	DengueVirus* DoClone(list<Virus*>);
+	DengueVirus* DoClone(list<Virus*>&);
 	void DoDie();
 	void InitResistance();
 	void SetProtein(const char[]);

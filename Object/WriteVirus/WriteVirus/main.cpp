@@ -2,7 +2,7 @@
 #include"Patient.h"
 #include"Virus.h"
 using namespace std;
-void main() {
+int main() {
 	srand(time(NULL));
 	Patient p;
 	int t = 0;
@@ -14,7 +14,11 @@ void main() {
 		{
 			p.TakeMedicine();
 		}
+		else {
+			cout << "No take" << endl;
+		}
 	}
 	if (p.getState() == 1) cout << endl << "KILLED ALL" << endl;
 	else cout << endl << "YOU DIED" << endl;
+	return 0;
 }
