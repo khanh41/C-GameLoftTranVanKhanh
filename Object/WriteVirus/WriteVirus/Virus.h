@@ -50,7 +50,6 @@ private:
 public:
 	DengueVirus();
 	DengueVirus(const DengueVirus&);
-	DengueVirus(char*,int,char[]);
 	void DoBorn();
 	DengueVirus* DoClone(list<Virus*>&);
 	void DoDie();

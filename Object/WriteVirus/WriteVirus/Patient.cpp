@@ -20,6 +20,7 @@ Patient::~Patient()
 	{
 		delete *it;
 	}
+	m_virusList.clear();
 }
 void Patient::InitResistance()
 {
@@ -33,7 +34,7 @@ void Patient::DoStart()
 	int min = 10, max = 20;
 	int VirusSize = rand() % (max - min + 1) + min;
 	for (int i = 0; i < VirusSize; i++) {
-		int randomVirus = rand() % 2;
+		int randomVirus = rand() % 2; // 1 - Fluvirus , 0 - DengueVirus
 		Virus* virus;
 		if (randomVirus) virus = new FluVirus();
 		else virus = new DengueVirus();
@@ -41,7 +42,7 @@ void Patient::DoStart()
 		virus = NULL;
 		delete virus;
 	}
-	m_state = 1;
+	m_state = ALIVE;
 }
 
 void Patient::TakeMedicine()
@@ -54,13 +55,15 @@ void Patient::TakeMedicine()
 		cout << (*it)->getResistance();
 		if ((*it)->ReduceResistance(rand() % 60 + 1) == false) {
 			this->m_virusList.push_back((*it)->DoClone(this->m_virusList)); 
-			++it;
+			it++;
 		}
 		else {
 			(*it)->DoDie();
+			delete *it;
 			m_virusList.remove(*it);
 			it = this->m_virusList.begin();
 		}
+	
 		if (this->m_resistance < TotalVirusResistance(this->m_virusList)) {
 			DoDie();
 			break;
@@ -72,7 +75,7 @@ void Patient::TakeMedicine()
 
 void Patient::DoDie()
 {
-	this->m_state = 0;
+	this->m_state = DIE;
 }
 
 int Patient::getState()

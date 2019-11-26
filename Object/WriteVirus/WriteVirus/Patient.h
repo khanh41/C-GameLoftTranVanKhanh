@@ -4,7 +4,8 @@
 #include <list>
 #include<time.h>
 using namespace std;
-
+#define ALIVE 1
+#define DIE 0
 class Patient
 {
 private:

@@ -3,7 +3,7 @@
 Virus::Virus()
 {
 	this->m_dna = new char[100]{""};
-	this->m_resistance = 10;
+	this->m_resistance = 0;
 }
 
 Virus::Virus(char* m_dna, int m_resistance)
@@ -47,6 +47,10 @@ bool Virus::ReduceResistance(int medicine_resistance)
 		return true;
 	}
 	return false;
+}
+
+void Virus::DoBorn()
+{
 }
 
 int Virus::getResistance()
@@ -94,10 +98,7 @@ void FluVirus::DoBorn()
 FluVirus* FluVirus::DoClone(list<Virus*> &list)
 {
 	cout << "-(Clone FluVirus)" << endl;
-	FluVirus *flu = new FluVirus;
-	flu->m_color = this->m_color;
-	flu->m_dna = this->m_dna;
-	flu->m_resistance = this->m_resistance;
+	FluVirus *flu = new FluVirus(*this);
 	return flu;
 }
 
@@ -110,11 +111,12 @@ void FluVirus::DoDie()
 void FluVirus::InitResistance()
 {
 	int min, max;
-	if (this->m_color == BLUE) {
+	if (this->m_color == BLUE) //blue -> random 10-15
+	{
 		min = 10;
 		max = 15;
 	}
-	else{
+	else{ //red - random 10->20
 		min = 10;
 		max = 20;
 	}
@@ -142,13 +144,6 @@ DengueVirus::DengueVirus(const DengueVirus& deng) : Virus(deng)
 	this->SetProtein(deng.m_protein);
 }
 
-DengueVirus::DengueVirus(char* m_dna, int m_resistance, char m_protein[])
-{
-	this->m_dna = m_dna;
-	SetProtein(m_protein);
-	this->m_resistance = m_resistance;
-}
-
 void DengueVirus::DoBorn()
 {
 	LoadADNInformation();
@@ -172,6 +167,7 @@ DengueVirus* DengueVirus::DoClone(list<Virus*>& list)
 
 void DengueVirus::DoDie()
 {
+	delete[] this->m_protein;
 	m_resistance = NULL;
 }
 
