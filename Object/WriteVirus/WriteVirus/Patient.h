@@ -21,7 +21,9 @@ public:
 	void TakeMedicine();
 	void DoDie();
 	int getState();
+	void setState(int);
 	int TotalVirusResistance(list<Virus*>);
+	int getSize();
 };
 
 

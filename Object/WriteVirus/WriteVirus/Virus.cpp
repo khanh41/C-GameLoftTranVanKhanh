@@ -42,11 +42,7 @@ void Virus::LoadADNInformation()
 bool Virus::ReduceResistance(int medicine_resistance)
 {
 	this->m_resistance -= medicine_resistance;
-	if (this->m_resistance <= 0) //if virus die
-	{
-		return true;
-	}
-	return false;
+	return this->m_resistance <= 0;
 }
 
 void Virus::DoBorn()
@@ -153,10 +149,9 @@ void DengueVirus::DoBorn()
 {
 	LoadADNInformation();
 	int random = rand() % 3;
-	//if (random == 0) SetProtein("NS3");
-	//if (random == 1) SetProtein("NS5");
-	//if (random == 2) 
-	SetProtein("E");
+	if (random == 0) SetProtein("NS3");
+	if (random == 1) SetProtein("NS5");
+	if (random == 2) SetProtein("E");
 }
 
 DengueVirus* DengueVirus::DoClone(list<Virus*>& list)
@@ -180,9 +175,20 @@ void DengueVirus::InitResistance()
 {
 	string *temp = new string[100]{""};
 	*temp = this->m_protein;
-	if(*temp=="NS3") this->m_resistance = rand() % 10 + 1;
-	if(*temp=="NS5") this->m_resistance = rand() % 10 + 11;
-	if(*temp=="E")   this->m_resistance = rand() % 10 + 21;
+	int min, max;
+	if (*temp == "NS3") {
+		min = 1; 
+		max = 10;
+	}
+	if (*temp == "NS5") {
+		min = 11; 
+		max = 20;
+	}
+	if (*temp == "E") {
+		min = 21; 
+		max = 30;
+	}
+	this->m_resistance = rand() % (max - min + 1) + min;
 	delete[] temp;
 }
 

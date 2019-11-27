@@ -49,21 +49,24 @@ void Patient::DoStart()
 
 void Patient::TakeMedicine()
 {
+	int medicine_resistance = rand() % 60 + 1;
+	cout << "Medicine: " << medicine_resistance;
 	list <Virus*> ::iterator it;
 	cout << endl << "Amount of Virus: " << this->m_virusList.size() << endl;
 	for (it = this->m_virusList.begin(); it != this->m_virusList.end();)
 	{ 
 		cout << "(" << TotalVirusResistance(m_virusList) << ")";
 		cout << (*it)->getResistance();
-		if ((*it)->ReduceResistance(rand() % 60 + 1) == false) {
+		if ((*it)->ReduceResistance(medicine_resistance) == false) {
 			this->m_virusList.push_back((*it)->DoClone(this->m_virusList)); 
 			it++;
 		}
 		else {
-			(*it)->DoDie();
-			delete *it;
-			m_virusList.remove(*it);
-			it = this->m_virusList.begin();
+			list <Virus*>::iterator virus = it;
+			it++;
+			(*virus)->DoDie();
+			delete *virus;
+			m_virusList.remove(*virus);
 		}
 	
 		if (this->m_resistance < TotalVirusResistance(this->m_virusList)) {
@@ -72,7 +75,8 @@ void Patient::TakeMedicine()
 		}
 		cout << "  " ;
 	}
-	cout << "(" << TotalVirusResistance(m_virusList) << ") ";
+	cout << "(" << TotalVirusResistance(m_virusList) << ") " << endl;
+	cout << "Amount Virus after: " << this->m_virusList.size() << endl;
 }
 
 void Patient::DoDie()
@@ -84,6 +88,10 @@ int Patient::getState()
 {
 	return this->m_state;
 }
+void Patient::setState(int state)
+{
+	this->m_state = state;
+}
 int Patient::TotalVirusResistance(list<Virus*> m_virusList) {
 	int sum = 0;
 	list <Virus*> ::iterator it;
@@ -91,4 +99,9 @@ int Patient::TotalVirusResistance(list<Virus*> m_virusList) {
 		sum += (*it)->getResistance();
 	}
 	return sum;
+}
+
+int Patient::getSize()
+{
+	return this->m_virusList.size();
 }
