@@ -46,9 +46,9 @@ bool LogoScene::init()
 
 void LogoScene::update(FLOAT deltaTime)
 {
-	count += 1;
-	if (count >= 1000) {
-		auto scene = HelloWorld::createScene();
-		Director::getInstance()->replaceScene(scene);
+	count += deltaTime;
+	if (count >= 3) {
+		auto load = Loading::createScene();
+		Director::getInstance()->replaceScene(load);
 	}
 }
