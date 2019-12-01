@@ -12,7 +12,6 @@ public:
 	virtual bool init();
 	void update(FLOAT deltaTime);
 	CREATE_FUNC(LogoScene);
-
 	Sprite *sprite1, *sprite2, *sprite3;
 };
 #endif // __LOGO_SCENE_H__

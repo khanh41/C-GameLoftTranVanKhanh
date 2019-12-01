@@ -41,6 +41,9 @@ bool LogoScene::init()
 	auto delay = DelayTime::create(0.5f);
 	auto seq = Sequence::create(moveEase, delay, moveback,delay->clone(), nullptr);
 	sprite3->runAction(RepeatForever::create(seq));
+
+	
+
 	return true;
 }
 
@@ -52,3 +55,4 @@ void LogoScene::update(FLOAT deltaTime)
 		Director::getInstance()->replaceScene(load);
 	}
 }
+

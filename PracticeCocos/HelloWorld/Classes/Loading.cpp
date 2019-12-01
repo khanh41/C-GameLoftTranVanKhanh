@@ -1,8 +1,13 @@
 #include "Loading.h"
 #include<iostream>
+#include <cocos\ui\CocosGUI.h>
 Scene* Loading::createScene()
 {
 	return Loading::create();
+}
+void Loading::menuCloseCallback(Ref* pSender)
+{
+	Director::getInstance()->end();
 }
 
 bool Loading::init()
@@ -31,8 +36,54 @@ bool Loading::init()
 	auto moveTo = MoveTo::create(6, Vec2(600, 100));
 	player->runAction(RepeatForever::create(animate));
 	player->runAction(moveTo);
-	//auto player = Sprite::createWithSpriteFrameName("blue.png");
 
+	auto closeItem = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
+		CC_CALLBACK_1(Loading::menuCloseCallback, this));
+	closeItem->setPosition(300, 300);
+	auto menu = Menu::create(closeItem, NULL);
+	menu->setPosition(Vec2::ZERO);
+	this->addChild(menu, 1);
+
+	auto play = ui::Button::create("play_normal.png", "play_pressed.png");
+	play->setPosition(Vec2(200,200));
+	play->setTitleText("Play");
+	play->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		auto scene = HelloWorld::createScene();
+		Director::getInstance()->replaceScene(scene);
+	});
+	addChild(play);
+
+	auto loadBG = Sprite::create("loadingbar_bg.png");
+	loadBG->setPosition(200,100);
+	addChild(loadBG);
+
+	static auto load = ui::LoadingBar::create("loadingbar.png");
+	load->setPosition(loadBG->getPosition());
+	load->setPercent(0);
+	load->setDirection(ui::LoadingBar::Direction::LEFT);
+	addChild(load);	
+
+	auto updateLoadingBar = CallFunc::create([]() {
+		if (load->getPercent() < 100)
+		{
+			load->setPercent(load->getPercent() + 1);
+		}
+
+	});
+	auto sqLoad = Sequence::createWithTwoActions(updateLoadingBar, DelayTime::create(0.1f));
+	auto repeat = Repeat::create(sqLoad, 100);
+	load->runAction(repeat);
+
+	static auto textField = ui::TextField::create("Hello Cocos2d-x", "Arial", 30);
+	textField->setMaxLengthEnabled(true);
+	textField->setMaxLength(10);
+	textField->setPasswordEnabled(true);
+	textField->setPosition(Vec2(200, 70));
+	textField->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
+	{
+		log("editing a TextField");
+	});
+	addChild(textField);
 
 	return true;
 }
@@ -40,7 +91,7 @@ bool Loading::init()
 void Loading::update(FLOAT deltaTime)
 {
 	count += deltaTime;
-	if (count >= 5) {
+	if (count >= 10) {
 		auto scene = HelloWorld::createScene();
 		Director::getInstance()->replaceScene(scene);
 	}

@@ -12,6 +12,7 @@ public:
 	void update(FLOAT deltaTime);
 	CREATE_FUNC(Loading);
 
+	void menuCloseCallback(Ref* pSender);
 	Sprite *player;
 };
 #endif // __LOADING_SCENE_H__
