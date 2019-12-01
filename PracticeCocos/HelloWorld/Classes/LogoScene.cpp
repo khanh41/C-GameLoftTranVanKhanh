@@ -1,4 +1,5 @@
 #include "LogoScene.h"
+#include"SettingScene.h"
 #include<iostream>
 Scene* LogoScene::createScene()
 {
@@ -51,7 +52,7 @@ void LogoScene::update(FLOAT deltaTime)
 {
 	count += deltaTime;
 	if (count >= 3) {
-		auto load = Loading::createScene();
+		auto load = SettingScene::createScene();
 		Director::getInstance()->replaceScene(load);
 	}
 }
