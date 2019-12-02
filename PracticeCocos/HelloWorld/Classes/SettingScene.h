@@ -3,10 +3,15 @@
 #include"cocos2d.h"
 #include"HelloWorldScene.h"
 #include"Loading.h"
+#include<iostream>
+#include <cocos\ui\CocosGUI.h>
 USING_NS_CC;
 class SettingScene: public Scene
 {
 public:
+	ui::CheckBox* checkbox;
+	ui::Slider* slider;
+	bool cls = true;
 	float count=0;
 	static Scene* createScene();
 	virtual bool init();

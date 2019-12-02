@@ -1,6 +1,4 @@
 #include "SettingScene.h"
-#include<iostream>
-#include <cocos\ui\CocosGUI.h>
 Scene* SettingScene::createScene()
 {
 	return SettingScene::create();
@@ -36,7 +34,25 @@ void SettingScene::ClickItemAbout(Ref* pSender)
 }
 void SettingScene::ClickItemSound(Ref* pSender)
 {
-	auto checkbox = ui::CheckBox::create("checkbox_normal.png",
+
+	if (cls) {
+		checkbox->setVisible(true);
+		slider->setVisible(true);
+		log("oko");
+	}
+	else {
+		checkbox->setVisible(false);
+		slider->setVisible(false);
+	}
+	cls = !cls;
+}
+
+bool SettingScene::init()
+{
+	if(!Scene::init()) return false;
+	scheduleUpdate(); 
+	
+	checkbox = ui::CheckBox::create("checkbox_normal.png",
 		"checkbox_pressed.png",
 		"checkbox_checked.png",
 		"checkbox_normal_disable.png",
@@ -56,25 +72,18 @@ void SettingScene::ClickItemSound(Ref* pSender)
 	});
 	checkbox->setPosition(Vec2(200, 150));
 	this->addChild(checkbox);
-
-	static auto slider = ui::Slider::create();
+	checkbox->setVisible(false);
+	slider = ui::Slider::create();
 	slider->loadBarTexture("slider_bar_bg.png");
 	slider->loadSlidBallTextures("slider_ball_normal.png", "slider_ball_pressed.png", "slider_ball_disable.png");
 	slider->loadProgressBarTexture("slider_bar_pressed.png");
 	slider->setPercent(10);
 	slider->setPosition(Vec2(200, 80));
 	slider->addClickEventListener([](Ref* event) {
-		log("Slider: %d", slider->getPercent());
+	//	log("Slider: %d", slider->getPercent());
 	});
 	addChild(slider);
-
-}
-
-bool SettingScene::init()
-{
-	if(!Scene::init()) return false;
-	scheduleUpdate();
-	
+	slider->setVisible(false);
 	auto itemSound = MenuItemFont::create("Sound", CC_CALLBACK_1(SettingScene::ClickItemSound, this));
 	auto itemAbout = MenuItemFont::create("About", CC_CALLBACK_1(SettingScene::ClickItemAbout, this));
 	auto menu = Menu::create(itemSound, itemAbout,nullptr);
