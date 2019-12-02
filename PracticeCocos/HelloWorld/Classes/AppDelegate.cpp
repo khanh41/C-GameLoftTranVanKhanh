@@ -38,10 +38,11 @@ using namespace cocos2d::experimental;
 #include "audio/include/SimpleAudioEngine.h"
 using namespace CocosDenshion;
 #endif
+#include <GamePlayScene.h>
 
 USING_NS_CC;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(1500, 1000);
+static cocos2d::Size designResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
@@ -117,7 +118,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = LogoScene::createScene();
+    auto scene = GamePlayScene::createScene();
     // run
     director->runWithScene(scene);
 
