@@ -1,32 +1,17 @@
-
-
 #SPRITE 7
-ID: 0
-PATH: %s/Sprites/background.png
-ID: 1
-PATH: %s/Sprites/logo.png
-ID: 2
-PATH: %s/Sprites/bullet.png
-ID: 3
-PATH: %s/Sprites/aestroid_dark.png
-ID: 4
-PATH: Sprites/spaceship.png
-ID: 5
-PATH: Sprites/loading.png
-ID: 6
-PATH: Sprites/progress.png
+1 Sprites/background.png
+2 Sprites/logo.png
+3 Sprites/bullet.png
+4 Sprites/aestroid_dark.png
+5 Sprites/spaceship.png
+6 Sprites/loading.png
+7 Sprites/progress.png
 #BUTTON 3
-ID: 0
-NORMAL_PATH: Buttons/play_normal.png
-PRESSED_PATH: Buttons/play_pressed.png
-ID: 1
-NORMAL_PATH: Buttons/resume_normal.png
-PRESSED_PATH: Buttons/resume_pressed.png
-ID: 2
-NORMAL_PATH: Buttons/home_normal.png
-PRESSED_PATH: Buttons/home_pressed.png
+1 Buttons/play_normal.png Buttons/play_pressed.png
+2 Buttons/resume_normal.png
+2 Buttons/resume_pressed.png
+3 Buttons/home_normal.png
+3 Buttons/home_pressed.png
 #FONT 2
-ID: 0
-PATH: Fonts/MarkerFelt.ttf
-ID: 1
-PATH: Fonts/arial.ttf
+1 Fonts/MarkerFelt.ttf
+2 Fonts/arial.ttf

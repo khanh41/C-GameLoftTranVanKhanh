@@ -13,11 +13,9 @@ bool LoadingScene::init()
         return false;
     }
 
-	ResourceManager* resource;
-	resource->GetInstance();
-	auto sprite = resource->GetSpriteById(1);
-	sprite->removeFromParent();
-	addChild(sprite, -1);
+	ResourceManager* resource = new ResourceManager();
+	auto sprite = resource->GetSpriteById(2);
+	addChild(sprite);
 	return true;
 }
 
