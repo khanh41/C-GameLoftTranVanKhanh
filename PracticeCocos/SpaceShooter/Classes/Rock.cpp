@@ -1,5 +1,18 @@
 
 #include "Rock.h"
-#include "SimpleAudioEngine.h"
 
-USING_NS_CC;
+Rock::Rock(cocos2d::Scene* scene)
+{
+}
+
+Rock::~Rock()
+{
+}
+
+void Rock::Init()
+{
+}
+
+void Rock::Update(FLOAT deltaTime)
+{
+}

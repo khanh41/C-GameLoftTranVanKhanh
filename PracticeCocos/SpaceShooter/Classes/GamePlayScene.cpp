@@ -1,8 +1,4 @@
-
 #include "GamePlayScene.h"
-#include "SimpleAudioEngine.h"
-
-USING_NS_CC;
 
 Scene* GamePlayScene::createScene()
 {
@@ -25,5 +21,22 @@ void GamePlayScene::update(FLOAT deltaTime)
 	if (count >= 0.2) {
 		GenerateRock();
 	}
+}
+
+void GamePlayScene::GenerateRock()
+{
+}
+
+void GamePlayScene::onTouchBegan(Touch*, Event*)
+{
+}
+
+void GamePlayScene::onTouchEnded(Touch*, Event*)
+{
+}
+
+bool GamePlayScene::onTouchMove(Touch*, Event*)
+{
+	return false;
 }
 

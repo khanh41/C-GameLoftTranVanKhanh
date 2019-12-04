@@ -1,8 +1,17 @@
 #include "SpaceShooter.h"
-#include "SimpleAudioEngine.h"
 
-USING_NS_CC;
-float count = 0;
+SpaceShooter::SpaceShooter(cocos2d::Scene* scene)
+{
+}
+
+SpaceShooter::~SpaceShooter()
+{
+}
+
+void SpaceShooter::Init()
+{
+}
+
 void SpaceShooter::Update(FLOAT deltaTime)
 {
 	count += deltaTime;
@@ -10,4 +19,12 @@ void SpaceShooter::Update(FLOAT deltaTime)
 		count = 0;
 		Shoot();
 	}
+}
+
+void SpaceShooter::Shoot()
+{
+}
+
+void SpaceShooter::Collision(std::vector<Rock*>)
+{
 }

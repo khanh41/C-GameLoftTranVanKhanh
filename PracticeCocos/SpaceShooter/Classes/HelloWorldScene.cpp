@@ -118,6 +118,10 @@ bool HelloWorld::init()
     return true;
 }
 
+void HelloWorld::update(FLOAT deltaTime)
+{
+}
+
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {

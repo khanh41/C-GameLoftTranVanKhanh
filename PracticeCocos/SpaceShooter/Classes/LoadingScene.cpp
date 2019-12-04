@@ -1,8 +1,5 @@
 
 #include "LoadingScene.h"
-#include "SimpleAudioEngine.h"
-
-USING_NS_CC;
 
 Scene* LoadingScene::createScene()
 {
@@ -15,6 +12,16 @@ bool LoadingScene::init()
     {
         return false;
     }
-    return true;
+
+	ResourceManager* resource;
+	resource->GetInstance();
+	auto sprite = resource->GetSpriteById(1);
+	sprite->removeFromParent();
+	addChild(sprite, -1);
+	return true;
+}
+
+void LoadingScene::update(FLOAT deltaTime)
+{
 }
 

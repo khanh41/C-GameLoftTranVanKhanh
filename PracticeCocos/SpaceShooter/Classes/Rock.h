@@ -1,9 +1,10 @@
 #include "cocos2d.h"
+#include"Object.h"
 
 class Rock : public Object
 {
 public:
-	Rock();
+	Rock(cocos2d::Scene* scene);
 	~Rock();
 	void Init();
 	void Update(FLOAT deltaTime);

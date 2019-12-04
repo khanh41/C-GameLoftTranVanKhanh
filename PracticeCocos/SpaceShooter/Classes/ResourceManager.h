@@ -1,7 +1,11 @@
+#ifndef  _RESOURCE_MANAGER_H_
+#define  _RESOURCE_MANAGER_H_
 #include "cocos2d.h"
 #include<string>
 #include<map>
 #include <ui\CocosGUI.h>
+USING_NS_CC;
+
 class ResourceManager
 {
 public:
@@ -20,4 +24,5 @@ public:
 	ui::Button* GetButtonById(char id);
 	Label* GetLabelById(char id);
 };
+#endif
 

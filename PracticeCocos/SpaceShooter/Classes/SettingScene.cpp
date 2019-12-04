@@ -1,8 +1,5 @@
 
 #include "SettingScene.h"
-#include "SimpleAudioEngine.h"
-
-USING_NS_CC;
 
 Scene* SettingScene::createScene()
 {
@@ -16,5 +13,17 @@ bool SettingScene::init()
 		return false;
 	}
 	return true;
+}
+
+void SettingScene::CreateSoundLayer(Ref*)
+{
+}
+
+void SettingScene::CreateAboutLayer(Ref*)
+{
+}
+
+void SettingScene::ChangePlayerName(Ref*)
+{
 }
 

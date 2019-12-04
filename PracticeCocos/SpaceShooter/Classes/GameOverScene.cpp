@@ -1,8 +1,4 @@
-
 #include "GameOverScene.h"
-#include "SimpleAudioEngine.h"
-
-USING_NS_CC;
 
 Scene* GameOverScene::createScene()
 {

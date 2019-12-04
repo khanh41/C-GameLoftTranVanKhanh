@@ -1,5 +1,7 @@
 #include "cocos2d.h"
 
+USING_NS_CC;
+
 class MainMenuScene : public cocos2d::Scene
 {
 public:

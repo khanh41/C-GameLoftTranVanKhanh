@@ -1,8 +1,5 @@
 
 #include "MainMenuScene.h"
-#include "SimpleAudioEngine.h"
-
-USING_NS_CC;
 
 Scene* MainMenuScene::createScene()
 {

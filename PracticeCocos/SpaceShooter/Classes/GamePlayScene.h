@@ -1,7 +1,10 @@
+
 #include "cocos2d.h"
 #include<vector>
 #include <SpaceShooter.h>
-#include <SpaceShooter.h>
+
+USING_NS_CC;
+
 class GamePlayScene : public cocos2d::Scene
 {
 public:

@@ -1,5 +1,10 @@
 
 #include "Object.h"
-#include "SimpleAudioEngine.h"
 
-USING_NS_CC;
+Object::Object()
+{
+}
+
+Object::~Object()
+{
+}
