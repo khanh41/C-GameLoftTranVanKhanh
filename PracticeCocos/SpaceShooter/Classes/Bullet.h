@@ -1,10 +1,9 @@
 #include "cocos2d.h"
-#include"Object.h"
-
-class Bullet : public Object
+#include"ObjectParent.h"
+class Bullet : public ObjectParent
 {
 public:
-	Bullet(cocos2d::Scene* scene);
+	Bullet(cocos2d::Scene*);
 	~Bullet();
 	void Init();
 	void Update(FLOAT deltaTime);

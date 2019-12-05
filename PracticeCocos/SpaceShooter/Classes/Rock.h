@@ -1,10 +1,12 @@
 #include "cocos2d.h"
-#include"Object.h"
-
-class Rock : public Object
+#include"ObjectParent.h"
+#include"ResourceManager.h"
+#include"LoadingScene.h"
+class Rock : public ObjectParent
 {
 public:
-	Rock(cocos2d::Scene* scene);
+	cocos2d::Scene* scene;
+	Rock(cocos2d::Scene*);
 	~Rock();
 	void Init();
 	void Update(FLOAT deltaTime);

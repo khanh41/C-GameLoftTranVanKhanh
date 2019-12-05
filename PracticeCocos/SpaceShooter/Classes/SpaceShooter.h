@@ -2,15 +2,16 @@
 #include<list>
 #include<vector>
 #include "Rock.h"
-#include"Object.h"
+#include"ObjectParent.h"
 
-class SpaceShooter: public Object
+class SpaceShooter: public ObjectParent
 {
 public:
-	float count = 0;
-	std::list<Object*> m_bullets;
+	cocos2d::Scene* scene;
+	FLOAT countTime = 0;
+	std::list<ObjectParent*> m_bullets;
 public:
-	SpaceShooter(cocos2d::Scene* scene);
+	SpaceShooter(cocos2d::Scene*);
 	~SpaceShooter();
 	void Init();
 	void Update(FLOAT deltaTime);

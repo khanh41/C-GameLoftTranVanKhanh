@@ -45,9 +45,6 @@
     <ClCompile Include="..\Classes\GameOverScene.cpp">
       <Filter>src\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GamePlayScene.cpp">
-      <Filter>src\Menu</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\SettingScene.cpp">
       <Filter>src\Menu</Filter>
     </ClCompile>
@@ -57,7 +54,10 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>src\Hello</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Object.cpp">
+    <ClCompile Include="..\Classes\GamePlayScene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ObjectParent.cpp">
       <Filter>src\ObjectManager</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,9 +86,6 @@
     <ClInclude Include="..\Classes\GameOverScene.h">
       <Filter>src\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GamePlayScene.h">
-      <Filter>src\Menu</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\SettingScene.h">
       <Filter>src\Menu</Filter>
     </ClInclude>
@@ -98,7 +95,10 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>src\Hello</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Object.h">
+    <ClInclude Include="..\Classes\GamePlayScene.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ObjectParent.h">
       <Filter>src\ObjectManager</Filter>
     </ClInclude>
   </ItemGroup>

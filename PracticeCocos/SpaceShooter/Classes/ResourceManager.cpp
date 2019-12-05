@@ -2,15 +2,37 @@
 
 ResourceManager::ResourceManager()
 {
+	//s_instance = new ResourceManager[10];
+	/*m_sprites = new std::map<char, Sprite*>[10];
+	m_buttons = new std::map<char, ui::Button*>;
+	m_labels = new std::map<char, Label*>;*/
+}
+
+ResourceManager::~ResourceManager()
+{
+}
+
+ResourceManager* ResourceManager::GetInstance()
+{
+	return this->s_instance;
+}
+
+void ResourceManager::Init(const std::string path)
+{
+	m_dataFolderPath = FileUtils::getInstance()->getStringFromFile(path);
+	Load(m_dataFolderPath);
+}
+
+void ResourceManager::Load(std::string fileName)
+{
 	int count = 0;
-	std::string path = FileUtils::getInstance()->getStringFromFile("Data.bin");
-	while (!path.empty()) {
-		std::string line = path.substr(0, path.find("\n"));
+	while (!m_dataFolderPath.empty()) {
+		std::string line = m_dataFolderPath.substr(0, m_dataFolderPath.find("\n"));
 		std::istringstream is(line);
 		int num;
-		std::string text,text2;
-		is >> num >> text>> text2;
-		path.erase(0, path.find("\n") + 1);
+		std::string text, text2;
+		is >> num >> text >> text2;
+		m_dataFolderPath.erase(0, m_dataFolderPath.find("\n") + 1);
 		if (num == 0) {
 			count++;
 			continue;
@@ -33,15 +55,6 @@ ResourceManager::ResourceManager()
 	}
 }
 
-ResourceManager::~ResourceManager()
-{
-}
-
-ResourceManager* ResourceManager::GetInstance()
-{
-	return this->s_instance;
-}
-
 Sprite* ResourceManager::GetSpriteById(char id)
 {
 	auto sprite = m_sprites.find(id)->second;
@@ -50,14 +63,12 @@ Sprite* ResourceManager::GetSpriteById(char id)
 
 ui::Button* ResourceManager::GetButtonById(char id)
 {
-	ui::Button* button = ui::Button::create("");
-	button->retain();
+	auto button = m_buttons.find(id)->second;
 	return button;
 }
 
 Label* ResourceManager::GetLabelById(char id)
 {
-	Label* label = Label::createWithTTF("Mytext", "Marker Felt.ttf", 24);
-	label->retain();
+	auto label = m_labels.find(id)->second;
 	return label;
 }

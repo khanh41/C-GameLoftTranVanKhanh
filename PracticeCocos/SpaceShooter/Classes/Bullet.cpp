@@ -1,8 +1,14 @@
 
 #include "Bullet.h"
+#include <ResourceManager.h>
 
 Bullet::Bullet(cocos2d::Scene* scene)
 {
+	Init();
+	m_sprite->setPosition(100, 150);
+	auto move = MoveBy::create(0.5f, Vec2(0, 200));
+	m_sprite->runAction(move);
+	scene->addChild(m_sprite);
 }
 
 Bullet::~Bullet()
@@ -11,6 +17,9 @@ Bullet::~Bullet()
 
 void Bullet::Init()
 {
+	ResourceManager* resource = new ResourceManager();
+	resource->Init("Data.bin");
+	m_sprite = resource->GetSpriteById(3);
 }
 
 void Bullet::Update(FLOAT deltaTime)

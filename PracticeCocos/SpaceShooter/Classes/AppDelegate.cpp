@@ -39,6 +39,7 @@ using namespace cocos2d::experimental;
 #include "audio/include/SimpleAudioEngine.h"
 using namespace CocosDenshion;
 #endif
+#include <GamePlayScene.h>
 
 USING_NS_CC;
 
