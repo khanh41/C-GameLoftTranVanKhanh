@@ -14,12 +14,11 @@ bool SettingScene::init()
 	{
 		return false;
 	}
-
-	ResourceManager* resource = new ResourceManager;
-	resource->Init("Data.bin");
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	auto getLabel = resource->GetLabelById(1);
+
+	auto getLabel = ResourceManager::GetInstance()->GetLabelById(1);
+	getLabel->removeFromParent();
 	auto setting = Label::create("Setting", getLabel->getBMFontFilePath(), 100);
 	setting->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 1.35));
@@ -41,7 +40,8 @@ bool SettingScene::init()
 	myMenu->setPosition(0, 0);
 	addChild(myMenu);
 
-	auto settingClick = resource->GetButtonById(4);
+	auto settingClick = ResourceManager::GetInstance()->GetButtonById(4);
+	settingClick->removeFromParent();
 	settingClick->setPosition(Vec2(origin.x + visibleSize.width - settingClick->getContentSize().width / 2,
 		settingClick->getContentSize().height / 2));
 	settingClick->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
@@ -51,7 +51,7 @@ bool SettingScene::init()
 			Director::getInstance()->replaceScene(scene);
 		}
 	});
-	addChild(settingClick,1);
+	addChild(settingClick,2);
 
 
 	return true;
@@ -64,35 +64,36 @@ void SettingScene::CreateSoundLayer(Ref* ref)
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	auto background = resource->GetSpriteById(8);
+	background->removeFromParent();
 	background->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 2.2));
-	this->addChild(background);
+	this->addChild(background,1);
 
 	auto about = resource->GetLabelById(1);
 	about->setString("ABOUT\nNothing :))");
 	about->setScale(3);
 	about->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 1.2));
-	addChild(about);
+	addChild(about,1);
 }
 
 void SettingScene::CreateAboutLayer(Ref* ref)
 {
-	ResourceManager* resource = new ResourceManager;
-	resource->Init("Data.bin");
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	auto background = resource->GetSpriteById(8);
+	auto background = ResourceManager::GetInstance()->GetSpriteById(8);
+	background->removeFromParent();
 	background->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 2));
-	this->addChild(background);
+	this->addChild(background,1);
 
-	auto about = resource->GetLabelById(1);
+	auto about = ResourceManager::GetInstance()->GetLabelById(1);
+	about->removeFromParent();
 	about->setString("Sound\nNothing :))");
 	about->setScale(3);
 	about->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 1.2));
-	addChild(about);
+	addChild(about,1);
 }
 
 void SettingScene::ChangePlayerName(Ref*)

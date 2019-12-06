@@ -17,9 +17,7 @@ Rock::~Rock()
 
 void Rock::Init()
 {
-	ResourceManager* resource = new ResourceManager();
-	resource->Init("Data.bin");
-	m_sprite = resource->GetSpriteById(4);
+	m_sprite = ResourceManager::GetInstance()->DuplicateSprite(ResourceManager::GetInstance()->GetSpriteById(3));
 }
 
 void Rock::Update(FLOAT deltaTime)

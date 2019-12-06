@@ -13,6 +13,7 @@ void ResourceManager::setHighScore(int sc)
 void ResourceManager::setYourScore(int sc)
 {
 	your = sc;
+	score = your;
 }
 ResourceManager::ResourceManager()
 {
@@ -30,9 +31,13 @@ ResourceManager::~ResourceManager()
 
 ResourceManager* ResourceManager::GetInstance()
 {
-	s_instance = ss_instance;
-	return this->s_instance;
+	if (ss_instance==nullptr) {
+		ss_instance = new ResourceManager();
+	}
+	return ss_instance;
 }
+
+
 
 void ResourceManager::Init(const std::string path)
 {
@@ -57,16 +62,19 @@ void ResourceManager::Load(std::string fileName)
 
 		if (count == 1) {
 			auto sprite = Sprite::create(text);
+			sprite->retain();
 			m_sprites.insert({ num,sprite });
 			continue;
 		}
 		if (count == 2) {
 			auto button = ui::Button::create(text, text2);
+			button->retain();
 			m_buttons.insert({ num,button });
 			continue;
 		}
 		if (count == 3) {
 			auto label = Label::createWithTTF("temp", text, 20);
+			label->retain();
 			m_labels.insert({ num,label });
 		}
 	}
@@ -89,3 +97,23 @@ Label* ResourceManager::GetLabelById(int id)
 	auto label = m_labels.find(id)->second;
 	return label;
 }
+Sprite* ResourceManager::DuplicateSprite(Sprite* sprite)
+{
+	Sprite* pRet = Sprite::createWithTexture(sprite->getTexture());
+	if (sprite->getChildrenCount() > 0)
+	{
+		for (int child = 0; child < sprite->getChildrenCount(); child++)
+		{
+			Sprite* spriteChild = (Sprite*)sprite->getChildren().at(child);
+			Sprite* clone = DuplicateSprite((Sprite*)spriteChild);
+			clone->boundingBox() = spriteChild->boundingBox();
+			clone->setContentSize(spriteChild->getContentSize());
+			clone->setPosition(spriteChild->getPosition());
+			clone->setAnchorPoint(spriteChild->getAnchorPoint());
+			pRet->addChild(clone, spriteChild->getZOrder(), spriteChild->getTag());
+		}
+	}
+	return pRet;
+}
+
+

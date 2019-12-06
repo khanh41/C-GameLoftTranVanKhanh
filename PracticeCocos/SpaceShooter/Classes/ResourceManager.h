@@ -16,13 +16,13 @@ public:
 	std::map<int, Label*> m_labels;
 public:
 	int score;
+	Sprite* DuplicateSprite(Sprite* sprite);
 	int getHighScore();
 	void setHighScore(int);
-	int getYourScore();
 	void setYourScore(int);
 	ResourceManager();
 	~ResourceManager();
-	ResourceManager* GetInstance();
+	static ResourceManager* GetInstance();
 	void Init(const std::string path);
 	void Load(std::string fileName);
 	Sprite* GetSpriteById(int id);

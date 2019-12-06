@@ -23,11 +23,9 @@ bool GamePlayScene::onTouchEnded(Touch* touch, Event* event)
 
 bool GamePlayScene::onTouchMoved(Touch* touch, Event* event)
 {
-	/*auto location = touch->getLocation();
-
-	location = cocos2d::CCDirector::sharedDirector()->convertToGL(location);
-	auto move = MoveTo::create(2.0f, location);
-	m_spaceShip->m_sprite->runAction(move);*/
+	auto location = touch->getLocation();
+	auto move = MoveTo::create(0, location);
+	m_spaceShip->m_sprite->runAction(move);
 	return true;
 }
 
@@ -40,12 +38,11 @@ bool GamePlayScene::init()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	scheduleUpdate();
-	auto resource = new ResourceManager();
-	resource->Init("Data.bin");
-	auto background = resource->GetSpriteById(8);
+	auto background = ResourceManager::GetInstance()->GetSpriteById(8);
+	background->removeFromParent();
+	this->addChild(background, -1);
 	background->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 2.2));
-	this->addChild(background, -1);
 
 	m_spaceShip = new SpaceShooter(this);
 	m_spaceShip->m_sprite->setPosition(Vec2(origin.x + visibleSize.width / 2,0));

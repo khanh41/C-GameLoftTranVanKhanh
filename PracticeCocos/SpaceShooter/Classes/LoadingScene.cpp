@@ -21,21 +21,19 @@ bool LoadingScene::init()
 	scheduleUpdate();
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	ResourceManager::GetInstance()->Init("Data.bin");
 
-	ResourceManager* resource = new ResourceManager();
-	resource->Init("Data.bin");
-
-	auto background = resource->GetSpriteById(8);
+	auto background = ResourceManager::GetInstance()->GetSpriteById(8);
 	background->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 2.2));
 	this->addChild(background, -1);
 
-	auto getLabel = resource->GetLabelById(1);
+	auto getLabel = ResourceManager::GetInstance()->GetLabelById(1);
 	auto loading = Label::create("Loading...", getLabel->getBMFontFilePath(), 40);
 	loading->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
 	addChild(loading);
 
-	auto loadBG = resource->GetSpriteById(6);
+	auto loadBG = ResourceManager::GetInstance()->GetSpriteById(6);
 	loadBG->setPosition(loading->getPosition()+Vec2(0,-40));
 	addChild(loadBG);
 	static auto load = ui::LoadingBar::create("progress.png");

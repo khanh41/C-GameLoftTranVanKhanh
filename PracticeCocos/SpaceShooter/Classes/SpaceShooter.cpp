@@ -59,9 +59,8 @@ void SpaceShooter::Collision(std::vector<Rock*> rocks) {
 	for (std::vector<Rock*>::iterator it = rocks.begin(); it != rocks.end(); ++it) {
 		if (m_sprite->getBoundingBox().containsPoint((*it)->m_sprite->getPosition()))
 		{
-			ResourceManager* rs = new ResourceManager();
-			if (rs->score < countt) rs->setHighScore(countt);
-			rs->setYourScore(countt);
+			if (ResourceManager::GetInstance()->score < countt) ResourceManager::GetInstance()->setHighScore(countt);
+			ResourceManager::GetInstance()->setYourScore(countt);
 			countt = 0;
 			auto scene = GameOverScene::createScene();
 			Director::getInstance()->replaceScene(scene);
@@ -79,7 +78,6 @@ void SpaceShooter::Collision(std::vector<Rock*> rocks) {
 							spriteCache->addSpriteFramesWithFile("spritelist.plist");
 							auto spriteFrame = spriteCache->getSpriteFrameByName("1_0.png");
 							auto bang = Sprite::createWithSpriteFrame(spriteFrame);
-							bang->retain();
 							bang->setPosition((*it)->m_sprite->getPosition());
 							scene->addChild(bang);
 							Vector<SpriteFrame*> animFrames;
@@ -102,6 +100,7 @@ void SpaceShooter::Collision(std::vector<Rock*> rocks) {
 					(*it)->m_sprite->setPosition(x, origin.y + visibleSize.height);
 					(*it)->m_sprite->runAction(move);
 					countt++;
+					if (m_bullets.size() == 0) break;
 				}
 			}
 		}

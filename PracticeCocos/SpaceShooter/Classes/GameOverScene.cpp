@@ -16,25 +16,27 @@ bool GameOverScene::init()
 	}
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	ResourceManager* resource = new ResourceManager();
-	resource->Init("Data.bin");
-	auto background = resource->GetSpriteById(1);
+
+	auto background = ResourceManager::GetInstance()->GetSpriteById(1);
+	background->removeFromParent();
 	background->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
 	addChild(background);
 
-	auto getLabel = resource->GetLabelById(1);
+	auto getLabel = ResourceManager::GetInstance()->GetLabelById(1);
+	getLabel->removeFromParent();
 	auto gameOver = Label::create("Game Over",getLabel->getBMFontFilePath(),40);
 	gameOver->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 1.2);
 	addChild(gameOver);
 
-	auto yourScore = Label::create("Your Score: "+std::to_string(resource->score), getLabel->getBMFontFilePath(), 20);
+	auto yourScore = Label::create("Your Score: "+std::to_string(ResourceManager::GetInstance()->score), getLabel->getBMFontFilePath(), 20);
 	yourScore->setPosition(gameOver->getPosition() + Vec2(0, -20 - gameOver->getContentSize().width/2));
 	addChild(yourScore);
-	auto highScore = Label::create("High Score: " + std::to_string(resource->getHighScore()), getLabel->getBMFontFilePath(), 20);
+	auto highScore = Label::create("High Score: " + std::to_string(ResourceManager::GetInstance()->getHighScore()), getLabel->getBMFontFilePath(), 20);
 	highScore->setPosition(yourScore->getPosition() + Vec2(0, -20 ));
 	addChild(highScore);
 
-	auto reset = resource->GetButtonById(2);
+	auto reset = ResourceManager::GetInstance()->GetButtonById(2);
+	reset->removeFromParent();
 	reset->setPosition(gameOver->getPosition() + Vec2(-100, -20-gameOver->getContentSize().width));
 	reset->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
 	{
@@ -45,7 +47,8 @@ bool GameOverScene::init()
 	});
 	addChild(reset);
 	
-	auto home = resource->GetButtonById(3);
+	auto home = ResourceManager::GetInstance()->GetButtonById(3);
+	home->removeFromParent();
 	home->setPosition(gameOver->getPosition() + Vec2(100, -20 - gameOver->getContentSize().width));
 	home->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
 	{
