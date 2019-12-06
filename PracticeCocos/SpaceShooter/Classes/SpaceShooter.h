@@ -10,6 +10,7 @@ public:
 	cocos2d::Scene* scene;
 	FLOAT countTime = 0;
 	std::list<ObjectParent*> m_bullets;
+	Label* CountScore;
 public:
 	SpaceShooter(cocos2d::Scene*);
 	~SpaceShooter();
