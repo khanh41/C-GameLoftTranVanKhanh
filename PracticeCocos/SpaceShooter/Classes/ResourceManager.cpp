@@ -1,7 +1,23 @@
 #include "ResourceManager.h"
-
+static int high=0;
+static int your=0;
+static ResourceManager* ss_instance;
+int ResourceManager::getHighScore()
+{
+	return high;
+}
+void ResourceManager::setHighScore(int sc)
+{
+	high = sc;
+}
+void ResourceManager::setYourScore(int sc)
+{
+	your = sc;
+}
 ResourceManager::ResourceManager()
 {
+	s_instance = ss_instance;
+	score = your;
 	//s_instance = new ResourceManager[10];
 	/*m_sprites = new std::map<char, Sprite*>[10];
 	m_buttons = new std::map<char, ui::Button*>;
@@ -14,6 +30,7 @@ ResourceManager::~ResourceManager()
 
 ResourceManager* ResourceManager::GetInstance()
 {
+	s_instance = ss_instance;
 	return this->s_instance;
 }
 

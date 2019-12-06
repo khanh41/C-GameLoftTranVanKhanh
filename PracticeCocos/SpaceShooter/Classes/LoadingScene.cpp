@@ -20,9 +20,14 @@ bool LoadingScene::init()
 
 	ResourceManager* resource = new ResourceManager();
 	resource->Init("Data.bin");
+
+	auto getLabel = resource->GetLabelById(1);
+	auto loading = Label::create("Loading...", getLabel->getBMFontFilePath(), 40);
+	loading->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+	addChild(loading);
+
 	auto loadBG = resource->GetSpriteById(6);
-	loadBG->setPosition(Vec2(origin.x + visibleSize.width / 2,
-						origin.y + visibleSize.height/2));
+	loadBG->setPosition(loading->getPosition()+Vec2(0,-40));
 	addChild(loadBG);
 	static auto load = ui::LoadingBar::create("progress.png");
 	load->setPosition(loadBG->getPosition());

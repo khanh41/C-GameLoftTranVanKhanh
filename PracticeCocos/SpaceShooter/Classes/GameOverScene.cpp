@@ -27,6 +27,13 @@ bool GameOverScene::init()
 	gameOver->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 1.2);
 	addChild(gameOver);
 
+	auto yourScore = Label::create("Your Score: "+std::to_string(resource->score), getLabel->getBMFontFilePath(), 20);
+	yourScore->setPosition(gameOver->getPosition() + Vec2(0, -20 - gameOver->getContentSize().width/2));
+	addChild(yourScore);
+	auto highScore = Label::create("High Score: " + std::to_string(resource->getHighScore()), getLabel->getBMFontFilePath(), 20);
+	highScore->setPosition(yourScore->getPosition() + Vec2(0, -20 ));
+	addChild(highScore);
+
 	auto reset = resource->GetButtonById(2);
 	reset->setPosition(gameOver->getPosition() + Vec2(-100, -20-gameOver->getContentSize().width));
 	reset->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)

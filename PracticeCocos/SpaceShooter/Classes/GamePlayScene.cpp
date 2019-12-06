@@ -39,8 +39,14 @@ bool GamePlayScene::init()
 	}
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
 	scheduleUpdate();
+	auto resource = new ResourceManager();
+	resource->Init("Data.bin");
+	auto background = resource->GetSpriteById(8);
+	background->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height / 2.2));
+	this->addChild(background, -1);
+
 	m_spaceShip = new SpaceShooter(this);
 	m_spaceShip->m_sprite->setPosition(Vec2(origin.x + visibleSize.width / 2,0));
 	auto move = MoveBy::create(2.0f, Vec2(0, 100));
@@ -60,7 +66,7 @@ void GamePlayScene::update(FLOAT deltaTime)
 	m_spaceShip->Collision(m_rocks);
 	m_spaceShip->Update(deltaTime);
 	countTEMP += deltaTime;
-	if (countTEMP >= 2) {
+	if (countTEMP >= 1) {
 		GenerateRock();
 		countTEMP = 0;
 	}

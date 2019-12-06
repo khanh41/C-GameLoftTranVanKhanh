@@ -51,7 +51,7 @@ bool SettingScene::init()
 			Director::getInstance()->replaceScene(scene);
 		}
 	});
-	addChild(settingClick);
+	addChild(settingClick,1);
 
 
 	return true;
@@ -65,7 +65,7 @@ void SettingScene::CreateSoundLayer(Ref* ref)
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	auto background = resource->GetSpriteById(8);
 	background->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height / 2));
+		origin.y + visibleSize.height / 2.2));
 	this->addChild(background);
 
 	auto about = resource->GetLabelById(1);

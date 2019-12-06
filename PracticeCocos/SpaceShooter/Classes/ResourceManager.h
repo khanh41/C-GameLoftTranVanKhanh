@@ -15,6 +15,11 @@ public:
 	std::map<int, ui::Button*> m_buttons;
 	std::map<int, Label*> m_labels;
 public:
+	int score;
+	int getHighScore();
+	void setHighScore(int);
+	int getYourScore();
+	void setYourScore(int);
 	ResourceManager();
 	~ResourceManager();
 	ResourceManager* GetInstance();
