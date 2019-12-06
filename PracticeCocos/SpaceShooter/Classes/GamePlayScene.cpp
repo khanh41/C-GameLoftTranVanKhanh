@@ -7,7 +7,8 @@ Scene* GamePlayScene::createScene()
 
 bool GamePlayScene::onTouchBegan(Touch* touch, Event* event)
 {
-	auto move = MoveBy::create(0.5f, Vec2(50, 0));
+	
+	auto move = MoveTo::create(0.5f, touch->getLocation());
 	m_spaceShip->m_sprite->runAction(move);
 	return true;
 
@@ -15,15 +16,18 @@ bool GamePlayScene::onTouchBegan(Touch* touch, Event* event)
 
 bool GamePlayScene::onTouchEnded(Touch* touch, Event* event)
 {
-	auto move = MoveBy::create(0.5f, Vec2(50, 0));
-	m_spaceShip->m_sprite->runAction(move->reverse());
+	//auto move = MoveBy::create(0.5f, Vec2(50, 0));
+	//m_spaceShip->m_sprite->runAction(move->reverse());
 	return true;
 }
 
 bool GamePlayScene::onTouchMoved(Touch* touch, Event* event)
 {
-	auto move = MoveBy::create(0.5f, Vec2(50, 0));
-	m_spaceShip->m_sprite->runAction(move);
+	/*auto location = touch->getLocation();
+
+	location = cocos2d::CCDirector::sharedDirector()->convertToGL(location);
+	auto move = MoveTo::create(2.0f, location);
+	m_spaceShip->m_sprite->runAction(move);*/
 	return true;
 }
 
@@ -33,9 +37,13 @@ bool GamePlayScene::init()
 	{
 		return false;
 	}
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
 	scheduleUpdate();
 	m_spaceShip = new SpaceShooter(this);
-	m_spaceShip->m_sprite->setPosition(100, 100);
+	m_spaceShip->m_sprite->setPosition(Vec2(origin.x + visibleSize.width / 2,0));
+	auto move = MoveBy::create(2.0f, Vec2(0, 100));
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan = CC_CALLBACK_2(GamePlayScene::onTouchBegan, this);
 	listener->onTouchMoved = CC_CALLBACK_2(GamePlayScene::onTouchMoved, this);
@@ -60,9 +68,11 @@ void GamePlayScene::update(FLOAT deltaTime)
 
 void GamePlayScene::GenerateRock()
 {
-	int x = cocos2d::RandomHelper::random_int(1, 500);
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	int x = cocos2d::RandomHelper::random_int(0, (int)(origin.x + visibleSize.width));
 	Rock* rock = new Rock(this);
 	m_rocks.push_back(rock);
-	rock->m_sprite->setPosition(x, 400);
+	rock->m_sprite->setPosition(x, origin.y + visibleSize.height);
 }
 

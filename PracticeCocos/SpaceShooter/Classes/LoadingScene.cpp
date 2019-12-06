@@ -1,6 +1,7 @@
 
 #include "LoadingScene.h"
 #include <GamePlayScene.h>
+#include <MainMenuScene.h>
 
 Scene* LoadingScene::createScene()
 {
@@ -14,10 +15,14 @@ bool LoadingScene::init()
         return false;
     }
 	scheduleUpdate();
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
 	ResourceManager* resource = new ResourceManager();
 	resource->Init("Data.bin");
 	auto loadBG = resource->GetSpriteById(6);
-	loadBG->setPosition(250, 150);
+	loadBG->setPosition(Vec2(origin.x + visibleSize.width / 2,
+						origin.y + visibleSize.height/2));
 	addChild(loadBG);
 	static auto load = ui::LoadingBar::create("progress.png");
 	load->setPosition(loadBG->getPosition());
@@ -42,7 +47,7 @@ void LoadingScene::update(FLOAT deltaTime)
 {
 	countT += deltaTime;
 	if (countT >= 3) {
-		auto scene = GamePlayScene::createScene();
+		auto scene = MainMenuScene::createScene();
 		Director::getInstance()->replaceScene(scene);
 	}
 }

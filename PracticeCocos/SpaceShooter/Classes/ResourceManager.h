@@ -11,18 +11,18 @@ class ResourceManager
 public:
 	ResourceManager* s_instance;
 	std::string m_dataFolderPath;
-	std::map<char, Sprite*> m_sprites;
-	std::map<char, ui::Button*> m_buttons;
-	std::map<char, Label*> m_labels;
+	std::map<int, Sprite*> m_sprites;
+	std::map<int, ui::Button*> m_buttons;
+	std::map<int, Label*> m_labels;
 public:
 	ResourceManager();
 	~ResourceManager();
 	ResourceManager* GetInstance();
 	void Init(const std::string path);
 	void Load(std::string fileName);
-	Sprite* GetSpriteById(char id);
-	ui::Button* GetButtonById(char id);
-	Label* GetLabelById(char id);
+	Sprite* GetSpriteById(int id);
+	ui::Button* GetButtonById(int id);
+	Label* GetLabelById(int id);
 };
 #endif
 

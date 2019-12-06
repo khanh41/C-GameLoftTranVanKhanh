@@ -4,13 +4,14 @@
 Rock::Rock(cocos2d::Scene* scene)
 {
 	Init();
-	auto move = MoveBy::create(2.0f, Vec2(0, -500));
+	auto move = MoveBy::create(2.0f, Vec2(0, -Director::getInstance()->getVisibleSize().height));
 	m_sprite->runAction(move);
 	scene->addChild(m_sprite);
 }
 
 Rock::~Rock()
 {
+	delete m_sprite;
 }
 
 void Rock::Init()

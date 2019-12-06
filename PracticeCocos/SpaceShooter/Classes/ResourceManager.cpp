@@ -40,34 +40,34 @@ void ResourceManager::Load(std::string fileName)
 
 		if (count == 1) {
 			auto sprite = Sprite::create(text);
-			m_sprites.insert({ (char)num,sprite });
+			m_sprites.insert({ num,sprite });
 			continue;
 		}
 		if (count == 2) {
 			auto button = ui::Button::create(text, text2);
-			m_buttons.insert({ (char)num,button });
+			m_buttons.insert({ num,button });
 			continue;
 		}
 		if (count == 3) {
 			auto label = Label::createWithTTF("temp", text, 20);
-			m_labels.insert({ (char)num,label });
+			m_labels.insert({ num,label });
 		}
 	}
 }
 
-Sprite* ResourceManager::GetSpriteById(char id)
+Sprite* ResourceManager::GetSpriteById(int id)
 {
 	auto sprite = m_sprites.find(id)->second;
 	return sprite;
 }
 
-ui::Button* ResourceManager::GetButtonById(char id)
+ui::Button* ResourceManager::GetButtonById(int id)
 {
 	auto button = m_buttons.find(id)->second;
 	return button;
 }
 
-Label* ResourceManager::GetLabelById(char id)
+Label* ResourceManager::GetLabelById(int id)
 {
 	auto label = m_labels.find(id)->second;
 	return label;
