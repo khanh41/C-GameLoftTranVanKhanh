@@ -5,6 +5,7 @@ Scene* GamePlayScene::createScene()
 	return GamePlayScene::create();
 }
 
+int countNext = 0;
 bool GamePlayScene::onTouchBegan(Touch* touch, Event* event)
 {
 	
@@ -35,15 +36,16 @@ bool GamePlayScene::init()
 	{
 		return false;
 	}
+	countNext = 0;
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	scheduleUpdate();
-	auto background = ResourceManager::GetInstance()->GetSpriteById(8);
+	background = ResourceManager::GetInstance()->GetSpriteById(8);
 	background->removeFromParent();
 	this->addChild(background, -1);
 	background->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 2.2));
-
+	
 	m_spaceShip = new SpaceShooter(this);
 	m_spaceShip->m_sprite->setPosition(Vec2(origin.x + visibleSize.width / 2,0));
 	auto move = MoveBy::create(2.0f, Vec2(0, 100));
@@ -63,9 +65,21 @@ void GamePlayScene::update(FLOAT deltaTime)
 	m_spaceShip->Collision(m_rocks);
 	m_spaceShip->Update(deltaTime);
 	countTEMP += deltaTime;
+	countNext += 1;
+	CCLOG("log:%d", countNext);
 	if (countTEMP >= 1) {
 		GenerateRock();
 		countTEMP = 0;
+	}
+	if (countNext == 200) {
+		auto visibleSize = Director::getInstance()->getVisibleSize();
+		Vec2 origin = Director::getInstance()->getVisibleOrigin();
+		auto move = MoveBy::create(20, -Vec2(0, origin.y + visibleSize.height));
+		auto map = TMXTiledMap::create("D:/PracticeGameLoft/Tiled/untitled.tmx");
+		map->setPosition(0, origin.y + visibleSize.height);
+		addChild(map, -1);
+		background->runAction(move);
+		map->runAction(move->clone());
 	}
 }
 

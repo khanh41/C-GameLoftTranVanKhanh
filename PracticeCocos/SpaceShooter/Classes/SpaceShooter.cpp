@@ -40,7 +40,7 @@ void SpaceShooter::Update(FLOAT deltaTime)
 	if (countTime >= 0.15f) {
 		countTime = 0;
 		Shoot();
-		audio->playEffect("fire.wav", false, 1.0f, 1.0f, 1.0f);
+		audio->playEffect("Sounds/fire.wav", false, 1.0f, 1.0f, 1.0f);
 	}
 	if (countLevel >= 5) {
 		auto emitter = ParticleSnow::create();
@@ -114,7 +114,12 @@ void SpaceShooter::Collision(std::vector<Rock*> rocks) {
 					(*it)->m_sprite->setPosition(x, origin.y + visibleSize.height);
 					(*it)->m_sprite->runAction(move);
 					countt++;
-					if (m_bullets.size() == 0) break;
+					if (m_bullets.size() == 0) {
+						Bullet* bullet = new Bullet(this->scene);
+						bullet->m_sprite->setPosition((this->m_sprite->getPosition() + Vec2(-1, 50)));
+						m_bullets.push_back(bullet);
+						bl = m_bullets.begin();
+					}
 				}
 			}
 		}

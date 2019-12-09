@@ -24,7 +24,6 @@ bool LoadingScene::init()
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	ResourceManager::GetInstance()->Init("Data.bin");
 
 	auto background = ResourceManager::GetInstance()->GetSpriteById(8);
 	background->setPosition(Vec2(origin.x + visibleSize.width / 2,

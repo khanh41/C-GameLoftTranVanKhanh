@@ -10,6 +10,7 @@ class GamePlayScene : public cocos2d::Scene
 public:
 	std::vector<Rock*> m_rocks;
 	SpaceShooter* m_spaceShip;
+	Sprite* background;
 public:
 	static cocos2d::Scene* createScene();
 	virtual bool init();
