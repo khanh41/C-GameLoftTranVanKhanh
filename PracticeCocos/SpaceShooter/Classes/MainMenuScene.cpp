@@ -3,6 +3,8 @@
 #include <ResourceManager.h>
 #include <GamePlayScene.h>
 #include <SettingScene.h>
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 Scene* MainMenuScene::createScene()
 {
@@ -16,7 +18,10 @@ bool MainMenuScene::init()
 	}
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
+	auto audio = SimpleAudioEngine::getInstance();
+	audio->stopBackgroundMusic();
+	audio->playBackgroundMusic("Sounds/title.mp3", true);
+	audio->playEffect("Sounds/confirm.wav", false, 1.0f, 1.0f, 1.0f);
 	auto background = ResourceManager::GetInstance()->GetSpriteById(1);
 	background->removeFromParent();
 	addChild(background);

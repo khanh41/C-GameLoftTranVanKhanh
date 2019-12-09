@@ -24,6 +24,8 @@
 
 #include "AppDelegate.h"
 #include "LoadingScene.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 // #define USE_AUDIO_ENGINE 1
 // #define USE_SIMPLE_AUDIO_ENGINE 1
@@ -121,6 +123,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     auto scene = LoadingScene::createScene();
+	auto audio = SimpleAudioEngine::getInstance();
+
+	audio->preloadBackgroundMusic("Sounds/ingame.mp3");
+	audio->preloadBackgroundMusic("Sounds/title.mp3");
+
+	audio->preloadEffect("Sounds/killed.wav");
+	audio->preloadEffect("Sounds/fire.wav");
+	audio->preloadEffect("Sounds/confirm.wav");
 
     // run
     director->runWithScene(scene);

@@ -2,6 +2,8 @@
 #include <ResourceManager.h>
 #include <GamePlayScene.h>
 #include <MainMenuScene.h>
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 Scene* GameOverScene::createScene()
 {
@@ -16,6 +18,9 @@ bool GameOverScene::init()
 	}
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	auto audio = SimpleAudioEngine::getInstance();
+	audio->playEffect("Sounds/confirm.wav", false, 1.0f, 1.0f, 1.0f);
+	
 
 	auto background = ResourceManager::GetInstance()->GetSpriteById(1);
 	background->removeFromParent();
@@ -53,11 +58,17 @@ bool GameOverScene::init()
 	home->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type)
 	{
 		if (type == ui::Widget::TouchEventType::ENDED) {
+
 			auto scene = MainMenuScene::createScene();
 			Director::getInstance()->replaceScene(scene);
 		}
 	});
 	addChild(home);
+	if (ResourceManager::GetInstance()->score == ResourceManager::GetInstance()->getHighScore()) {
+		auto emitter = ParticleFireworks::create();
+		emitter->setPosition(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2);
+		addChild(emitter, 10);
+	}
 	return true;
 }
 

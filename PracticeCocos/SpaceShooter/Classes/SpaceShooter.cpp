@@ -1,6 +1,10 @@
 #include "SpaceShooter.h"
 #include <Bullet.h>
 #include <GameOverScene.h>
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
+
+auto audio = SimpleAudioEngine::getInstance();
 SpaceShooter::SpaceShooter(cocos2d::Scene* scene)
 {
 	this->scene = scene;
@@ -28,13 +32,21 @@ void SpaceShooter::Init()
 	auto animate = Animate::create(animation);
 	m_sprite->runAction(RepeatForever::create(animate));
 }
-
+float countLevel = 0;
 void SpaceShooter::Update(FLOAT deltaTime)
 {
+	countLevel += deltaTime;
 	countTime += deltaTime;
 	if (countTime >= 0.15f) {
 		countTime = 0;
 		Shoot();
+		audio->playEffect("fire.wav", false, 1.0f, 1.0f, 1.0f);
+	}
+	if (countLevel >= 5) {
+		auto emitter = ParticleSnow::create();
+		scene->addChild(emitter);
+		emitter->setDuration(2.0f);
+		countLevel = 0;
 	}
 }
 
@@ -59,7 +71,7 @@ void SpaceShooter::Collision(std::vector<Rock*> rocks) {
 	for (std::vector<Rock*>::iterator it = rocks.begin(); it != rocks.end(); ++it) {
 		if (m_sprite->getBoundingBox().containsPoint((*it)->m_sprite->getPosition()))
 		{
-			if (ResourceManager::GetInstance()->score < countt) ResourceManager::GetInstance()->setHighScore(countt);
+			if (ResourceManager::GetInstance()->getHighScore() < countt) ResourceManager::GetInstance()->setHighScore(countt);
 			ResourceManager::GetInstance()->setYourScore(countt);
 			countt = 0;
 			auto scene = GameOverScene::createScene();
@@ -88,9 +100,11 @@ void SpaceShooter::Collision(std::vector<Rock*> rocks) {
 							}
 							auto animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
 							auto animate = Animate::create(animation);
-							bang->runAction(animate);
+							bang->runAction(animate); 
+							audio->playEffect("Sounds/killed.wav", false, 1.0f, 1.0f, 1.0f);
 						}
 					}
+					
 					auto move = MoveBy::create(2.0f, Vec2(0, -Director::getInstance()->getVisibleSize().height));
 					(*bl)->m_sprite->removeFromParent();
 					delete (*bl);
@@ -106,40 +120,3 @@ void SpaceShooter::Collision(std::vector<Rock*> rocks) {
 		}
 	}
 }
-/*void SpaceShooter::Collision(std::vector<Rock*> rocks)
-{
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	FLOAT minX = this->m_sprite->getPosition().x - 20;
-	FLOAT maxX = this->m_sprite->getPosition().x + 20;
-	FLOAT minY = this->m_sprite->getPosition().y - 20;
-	FLOAT maxY = this->m_sprite->getPosition().y + 20;
-
-
-	for (std::vector<Rock*>::iterator it = rocks.begin(); it != rocks.end(); ++it) {
-		if ((*it)->m_sprite->getPosition().x >= minX && (*it)->m_sprite->getPosition().x <= maxX
-			&& (*it)->m_sprite->getPosition().y >= minY && (*it)->m_sprite->getPosition().y <= maxY)
-		{
-			auto scene = GameOverScene::createScene();
-			Director::getInstance()->replaceScene(scene);
-		}
-		else {
-			for (std::list<ObjectParent*>::iterator bl = m_bullets.begin(); bl != m_bullets.end(); ++bl) {
-				FLOAT minBX = (*bl)->m_sprite->getPosition().x - 10;
-				FLOAT maxBX = (*bl)->m_sprite->getPosition().x + 10;
-				FLOAT minBY = (*bl)->m_sprite->getPosition().y - 10;
-				FLOAT maxBY = (*bl)->m_sprite->getPosition().y + 10;
-
-				if ((*it)->m_sprite->getPosition().x >= minBX && (*it)->m_sprite->getPosition().x <= maxBX
-					&& (*it)->m_sprite->getPosition().y >= minBY && (*it)->m_sprite->getPosition().y <= maxBY)
-				{
-					(*bl)->m_sprite->removeFromParent();
-					delete (*bl);
-					m_bullets.remove((*bl));
-					bl = m_bullets.begin();
-					int x = cocos2d::RandomHelper::random_int(0, (int)(origin.x + visibleSize.width));
-					(*it)->m_sprite->setPosition(x, origin.y + visibleSize.height);
-				}
-			}
-		}
-	}*/

@@ -2,6 +2,8 @@
 #include "LoadingScene.h"
 #include <GamePlayScene.h>
 #include <MainMenuScene.h>
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 Scene* LoadingScene::createScene()
 {
@@ -19,6 +21,11 @@ bool LoadingScene::init()
         return false;
     }
 	scheduleUpdate();
+	auto audio = SimpleAudioEngine::getInstance();
+	audio->playBackgroundMusic("Sounds/ingame.mp3", false);
+	audio->playEffect("confirm.wav", false, 1.0f, 1.0f, 1.0f);
+
+
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	ResourceManager::GetInstance()->Init("Data.bin");

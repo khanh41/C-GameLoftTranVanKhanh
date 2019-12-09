@@ -2,6 +2,8 @@
 #include "SettingScene.h"
 #include "ResourceManager.h"
 #include <MainMenuScene.h>
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 Scene* SettingScene::createScene()
 {
@@ -59,17 +61,15 @@ bool SettingScene::init()
 
 void SettingScene::CreateSoundLayer(Ref* ref)
 {
-	ResourceManager* resource = new ResourceManager;
-	resource->Init("Data.bin");
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	auto background = resource->GetSpriteById(8);
+	auto background = ResourceManager::GetInstance()->GetSpriteById(8);
 	background->removeFromParent();
 	background->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 2.2));
 	this->addChild(background,1);
 
-	auto about = resource->GetLabelById(1);
+	auto about = ResourceManager::GetInstance()->GetLabelById(1);
 	about->setString("ABOUT\nNothing :))");
 	about->setScale(3);
 	about->setPosition(Vec2(origin.x + visibleSize.width / 2,
@@ -94,6 +94,10 @@ void SettingScene::CreateAboutLayer(Ref* ref)
 	about->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		origin.y + visibleSize.height / 1.2));
 	addChild(about,1);
+
+	auto audio = SimpleAudioEngine::getInstance();
+	audio->setEffectsVolume(0.5);
+	audio->setBackgroundMusicVolume(0.5);
 }
 
 void SettingScene::ChangePlayerName(Ref*)
