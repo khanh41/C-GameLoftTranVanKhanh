@@ -1,10 +1,11 @@
-
 #include "SettingScene.h"
 #include "ResourceManager.h"
 #include <MainMenuScene.h>
 #include "SimpleAudioEngine.h"
 using namespace CocosDenshion;
 
+bool aboutClick = false;
+ui::Slider* SettingScene::slider;
 Scene* SettingScene::createScene()
 {
 	return SettingScene::create();
@@ -16,8 +17,35 @@ bool SettingScene::init()
 	{
 		return false;
 	}
+
+	this->aboutUI = ResourceManager::GetInstance()->GetLabelById(1);
+	this->slider = ui::Slider::create();
+	this->backgroundUI = ResourceManager::GetInstance()->GetSpriteById(8);
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+	backgroundUI->removeFromParent();
+	backgroundUI->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height / 2));
+	this->addChild(backgroundUI, 1);
+	backgroundUI->setVisible(false);
+
+	aboutUI->removeFromParent();
+	aboutUI->setString("Sound\nNothing :))");
+	aboutUI->setScale(3);
+	aboutUI->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height / 1.2));
+	addChild(aboutUI, 1);
+	aboutUI->setVisible(false);
+
+	slider->loadBarTexture("slider_bar_bg.png");
+	slider->loadSlidBallTextures("slider_ball_normal.png", "slider_ball_pressed.png", "slider_ball_disable.png");
+	slider->loadProgressBarTexture("slider_bar_pressed.png");
+	slider->setPercent(10);
+	slider->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height / 2));
+	addChild(slider, 1);
+	slider->setVisible(false);
 
 	auto getLabel = ResourceManager::GetInstance()->GetLabelById(1);
 	getLabel->removeFromParent();
@@ -50,6 +78,7 @@ bool SettingScene::init()
 	{
 		if (type == ui::Widget::TouchEventType::ENDED) {
 			auto scene = MainMenuScene::createScene();
+			Director::getInstance()->pushScene(this);
 			Director::getInstance()->replaceScene(scene);
 		}
 	});
@@ -61,46 +90,22 @@ bool SettingScene::init()
 
 void SettingScene::CreateSoundLayer(Ref* ref)
 {
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	auto background = ResourceManager::GetInstance()->GetSpriteById(8);
-	background->removeFromParent();
-	background->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height / 2.2));
-	this->addChild(background,1);
-
-	auto about = ResourceManager::GetInstance()->GetLabelById(1);
-	about->setString("ABOUT\nNothing :))");
-	about->setScale(3);
-	about->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height / 1.2));
-	addChild(about,1);
+	auto audio = SimpleAudioEngine::getInstance();
+	backgroundUI->setVisible(true);
+	aboutUI->setVisible(true);
+	slider->setVisible(true);
+	slider->setPercent(audio->getBackgroundMusicVolume());
+	slider->addClickEventListener([](Ref* event) {
+		log("Slider: %f", slider->getPercent()/100.0f);
+	});
+	audio->setEffectsVolume(slider->getPercent() / 100.0f);
+	audio->setBackgroundMusicVolume(slider->getPercent() / 100.0f);
 }
 
 void SettingScene::CreateAboutLayer(Ref* ref)
 {
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	auto background = ResourceManager::GetInstance()->GetSpriteById(8);
-	background->removeFromParent();
-	background->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height / 2));
-	this->addChild(background,1);
-
-	auto about = ResourceManager::GetInstance()->GetLabelById(1);
-	about->removeFromParent();
-	about->setString("Sound\nNothing :))");
-	about->setScale(3);
-	about->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height / 1.2));
-	addChild(about,1);
-
-	auto audio = SimpleAudioEngine::getInstance();
-	audio->setEffectsVolume(0.5);
-	audio->setBackgroundMusicVolume(0.5);
+		
 }
 
-void SettingScene::ChangePlayerName(Ref*)
-{
-}
+void SettingScene::ChangePlayerName(Ref*){}
 
